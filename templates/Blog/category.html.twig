@@ -1,0 +1,18 @@
+{% extends 'templates/base.html.twig' %}
+
+{% block title %}All articles by {% endblock %}
+
+{% block content %}
+    <h1>Liste des articles de la categorie {{ category }} </h1>
+    {% for article in articles %}
+        <div>
+            <h2>{{ article.id }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
+            <p>{{ article.content }}</p>
+        </div>
+    {% else %}
+        Aucun article trouvé.
+    {% endfor %}
+    <a href="{{ path('app_index') }}">
+        Back to homepage.
+    </a>
+{% endblock %}
