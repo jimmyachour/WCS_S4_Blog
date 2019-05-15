@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Entity\Article;
 use App\Entity\Category;
@@ -10,12 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/** @Route("/blog", name="blog_") */
 class BlogController extends AbstractController
 {
     /**
      * Page accueil
      *
-     * @Route("/", name="app_index")
+     * @Route("/", name="index")
      */
     public function index():Response
     {
@@ -29,15 +28,13 @@ class BlogController extends AbstractController
             );
         }
 
-
-
         return $this->render('Blog/index.html.twig', ['articles' => $articles]);
     }
 
     /**
      * Page show
      *
-     * @Route("/blog/show/{slug}", name="blog_show", requirements={"slug"="[a-z0-9]+([-][a-z0-9]+)*"})
+     * @Route("/show/{slug}", name="show", requirements={"slug"="[a-z0-9]+([-][a-z0-9]+)*"})
      */
     public function show(string $slug = 'article-sans-titre'):Response
     {
@@ -50,18 +47,15 @@ class BlogController extends AbstractController
     /**
      * Page show by category
      *
-     * @Route("/category/{category}", name="show_category")
+     * @Route("/category/{category}", name="category")
      */
     public function showByCategory(string $category):Response
     {
         $cateRepo = $this->getDoctrine()->getRepository(Category::class);
-        $category = $cateRepo->findByName($category)[0];
+        $category = $cateRepo->findOneByName($category);
 
-        $articleRepo = $this->getDoctrine()->getRepository(Article::class);
-        $articles = $articleRepo->findBy(['category' => $category],['id' => 'desc'], 3);
+        $articles = $category->getArticles();
 
         return $this->render('Blog/category.html.twig', ['articles' => $articles, 'category' => $category->getName()]);
     }
-
-
 }
