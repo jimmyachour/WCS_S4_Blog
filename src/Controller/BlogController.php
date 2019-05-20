@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,13 +48,10 @@ class BlogController extends AbstractController
     /**
      * Page show by category
      *
-     * @Route("/category/{category}", name="category")
+     * @Route("/category/{name}", name="category")
      */
-    public function showByCategory(string $category):Response
+    public function showByCategory(Category $category): Response
     {
-        $cateRepo = $this->getDoctrine()->getRepository(Category::class);
-        $category = $cateRepo->findOneByName($category);
-
         $articles = $category->getArticles();
 
         return $this->render('Blog/category.html.twig', ['articles' => $articles, 'category' => $category->getName()]);
