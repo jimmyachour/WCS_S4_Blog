@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /** @Route("/blog", name="blog_") */
 class BlogController extends AbstractController
@@ -54,6 +55,8 @@ class BlogController extends AbstractController
     {
         $articles = $category->getArticles();
 
-        return $this->render('Blog/category.html.twig', ['articles' => $articles, 'category' => $category->getName()]);
+        return $this->render('Blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
     }
+
+
 }

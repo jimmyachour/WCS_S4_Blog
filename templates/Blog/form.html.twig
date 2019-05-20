@@ -1,0 +1,15 @@
+{% extends 'templates/base.html.twig' %}
+
+{% block title %}Ajouter une categorie{% endblock %}
+
+{% block content %}
+    <h1>Ajouter une catégorie</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button type="subit" class="btn btn-primary">Create</button>
+    {{ form_end(form) }}
+
+{% endblock %}
+
