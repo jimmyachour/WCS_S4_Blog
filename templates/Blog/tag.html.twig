@@ -1,0 +1,39 @@
+{% extends 'templates/base.html.twig' %}
+
+
+{% block title %}Les tags{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>Voici la pages qui affiche les tags</h1>
+
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Liste des Tags
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for tag in listTags %}
+                    <a class="dropdown-item" href="/blog/tag/{{ tag.name }}">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            {% for article in tag.article %}
+                <div class="card col-12 col-md-3" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.content }}</p>
+                        <a href="{{ path('blog_article', {'id': article.id}) }}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert">
+                    Désolé, mais il n'y a aucun article dans ce tag
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

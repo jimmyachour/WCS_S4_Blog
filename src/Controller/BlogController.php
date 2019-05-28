@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Category;
 
+use App\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,14 +37,11 @@ class BlogController extends AbstractController
     /**
      * Page show
      *
-     * @Route("/show/{slug}", name="show", requirements={"slug"="[a-z0-9]+([-][a-z0-9]+)*"})
+     * @Route("/article/{id}", name="article")
      */
-    public function show(string $slug = 'article-sans-titre'):Response
+    public function show(Article $article):Response
     {
-        $article =  new Article();
-        $article->setTitle($slug);
-
-        return $this->render('Blog/show.html.twig', ['title' => $article->getTitle()]);
+        return $this->render('Blog/show.html.twig', ['article' => $article]);
     }
 
     /**
@@ -56,6 +54,19 @@ class BlogController extends AbstractController
         $articles = $category->getArticles();
 
         return $this->render('Blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
+    }
+
+    /**
+     * Page show tag
+     *
+     * @Route("/tag/{name}", name="tag")
+     */
+    public function showByTag(Tag $tag): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $listTags = $entityManager->getRepository(Tag::class)->findAll();
+
+        return $this->render('Blog/tag.html.twig', ['tag' => $tag, 'listTags' => $listTags]);
     }
 
 
