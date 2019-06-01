@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+{% extends 'templates/base.html.twig' %}
 
-<title>Edit Article</title>
+{% block title %}<title>Edit Article</title>{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Edit Article</h1>
 
     {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}

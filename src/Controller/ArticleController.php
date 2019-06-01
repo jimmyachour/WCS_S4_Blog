@@ -30,10 +30,13 @@ class ArticleController extends AbstractController
      */
     public function new(Request $request): Response
     {
+
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $task = $form->getData();
@@ -61,7 +64,7 @@ class ArticleController extends AbstractController
      */
     public function edit(Request $request, Article $article): Response
     {
-        $form = $this->createForm(Article1Type::class, $article);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

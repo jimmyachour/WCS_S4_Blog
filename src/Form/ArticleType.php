@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Article;
 use App\Entity\Category;
@@ -18,7 +19,12 @@ class ArticleType extends AbstractType
             ->add('content')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
+                'choice_label' => 'name'])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
                 'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
             ])
         ;
     }

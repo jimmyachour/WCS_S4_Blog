@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+{% extends 'templates/base.html.twig' %}
 
-<title>Article</title>
+{% block title %}<title>Article</title>{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Article</h1>
 
     <table class="table">
@@ -18,6 +18,22 @@
             <tr>
                 <th>Content</th>
                 <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                {% if article.category.name %}
+                    <td>{{ article.category.name }}</td>
+                {% else %}
+                    <td>Aucune catégorie associée</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Tags</th>
+                {% for tag in article.tags %}
+                    <td>{{ tag.name }}</td>
+                {% else %}
+                <td>Aucun tag associé</td>
+                {% endfor %}
             </tr>
         </tbody>
     </table>
