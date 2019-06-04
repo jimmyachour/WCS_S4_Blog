@@ -57,7 +57,7 @@ class Article
 
     public function setTitle(string $title): self
     {
-        $this->title = $this->getReadableTitle($title);
+        $this->title = $title;
 
         return $this;
     }
