@@ -3,6 +3,7 @@
 
 namespace App\DataFixtures;
 
+use App\Service\Slugify;
 use Faker;
 use App\Entity\Article;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,13 +15,14 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-
+        $slugify = new Slugify();
 
         for ($x = 0; $x <= 50; $x++) {
 
             $article = new Article();
             $article->setTitle(strtolower($faker->sentence(6, true)));
             $article->setContent(strtolower($faker->paragraphs( 3, true)));
+            $article->setSlug($slugify->generate($article->getTitle()));
 
             $manager->persist($article);
             $article->setCategory($this->getReference('categorie_'. rand(0, 6)));
